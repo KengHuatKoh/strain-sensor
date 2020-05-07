@@ -24,11 +24,12 @@ class StrainSensor
     // Set the current reading to become equivalent to sitting (90 deg knee joint)
     void angle90Calib();
 
-    // Set the current reading to become equivalent to standing (0 deg knee joint)
-    void angle0Calib();
+    // Set the current reading to become equivalent to standing (180 deg knee joint)
+    void angle180Calib();
     		
 	private:
-    float _linearMap(uint16_t x, uint16_t in_min, uint16_t in_max, float out_min, float out_max);
+    float _linearMapA(uint16_t x, uint16_t in_min, uint16_t in_max, float out_min, float out_max);
+    int16_t _linearMapB(float x, float in_min, float in_max, uint16_t out_min, uint16_t out_max);
 		int _pin;
 		int _numReadings;
 		const uint8_t _readingsSize = 10;
@@ -36,8 +37,10 @@ class StrainSensor
 		uint8_t _readIndex;
 		uint16_t _total;
 		uint16_t _average;
-    uint16_t _min = 0;
-    uint16_t _max = 1023;
+    float _myMin = 0.0;
+    float _myMax = 5.0;
+    float _myBuffer;
+    float _myTurningpoint;
 };
 
 #endif
